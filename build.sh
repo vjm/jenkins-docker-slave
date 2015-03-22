@@ -1,0 +1,1 @@
+docker build -t vjm03/jenkins-docker-slave .

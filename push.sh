@@ -1,0 +1,1 @@
+docker push vjm03/jenkins-docker-slave
