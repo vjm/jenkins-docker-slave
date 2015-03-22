@@ -1,0 +1,4 @@
+[submodule "vmcom"]
+	path = vmcom
+	url = /Users/vjm/Code/vmcom
+	branch = master
