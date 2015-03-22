@@ -83,6 +83,10 @@ RUN sed -i '/vm_pages/d' /home/jenkins/Gemfile && sed -i '/vm_log_formatting/d' 
 RUN bundle install
 RUN rm /home/jenkins/Gemfile
 
+USER root
+
+# RUN ssh-keygen -A
+
 # Standard SSH port
 EXPOSE 22
 
