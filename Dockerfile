@@ -3,7 +3,10 @@ MAINTAINER Vince Montalbano <vince.montalbano@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get -y upgrade && apt-get install -y git wget curl openssh-server autoconf make zlibc zlib1g zlib1g-dev openssl libssl-dev libreadline-dev libgdbm-dev libreadline6-dev libncurses5-dev libpq-dev libffi-dev
+# Install JDK 7 (latest edition)
+RUN apt-get update && apt-get install -y openjdk-7-jdk
+
+RUN apt-get update && apt-get -y upgrade && apt-get install -y git wget curl openssh-server autoconf make zlibc zlib1g zlib1g-dev openssl libssl-dev libreadline-dev libgdbm-dev libreadline6-dev libncurses5-dev libpq-dev libffi-dev libmysqlclient-dev g++
 
 RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
 RUN mkdir -p /var/run/sshd
@@ -49,12 +52,9 @@ RUN echo 'jenkins ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # skip installing gem documentation
 RUN echo 'gem: --no-rdoc --no-ri' >> "/home/jenkins/.gemrc" 
 
-RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN (curl -sL https://deb.nodesource.com/setup | bash -) && apt-get update && apt-get install -y npm nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/* && ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN apt-get update && apt-get install -y mysql-client postgresql-client sqlite3 --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-# Install JDK 7 (latest edition)
-RUN apt-get update && apt-get install -y openjdk-7-jdk
 
 # Standard SSH port
 EXPOSE 22
